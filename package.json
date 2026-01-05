@@ -29,8 +29,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write .",
+    "lint": "biome check . && eslint",
+    "lint:fix": "biome check --write . && eslint --fix",
+    "lint:docs": "eslint",
     "format": "biome format --write .",
     "typecheck": "tsc --noEmit",
     "knip": "knip",
@@ -41,7 +42,18 @@
   "engines": {
     "node": ">=20"
   },
-  "keywords": [],
+  "keywords": [
+    "typescript",
+    "template",
+    "npm",
+    "library",
+    "bun",
+    "biome",
+    "vitest",
+    "changesets",
+    "esm",
+    "cjs"
+  ],
   "author": "",
   "license": "MIT",
   "repository": {
@@ -58,11 +70,17 @@
     "@commitlint/cli": "^20.3.0",
     "@commitlint/config-conventional": "^20.3.0",
     "@commitlint/types": "^20.2.0",
+    "@eslint/js": "^9.39.2",
     "@vitest/coverage-v8": "^4.0.16",
+    "eslint": "^9.39.2",
+    "eslint-plugin-jsdoc": "^61.5.0",
+    "globals": "^17.0.0",
+    "jiti": "^2.6.1",
     "knip": "^5.79.0",
     "lefthook": "^2.0.13",
     "tsdown": "^0.19.0-beta.2",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.51.0",
     "vitest": "^4.0.16"
   }
 }
