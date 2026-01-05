@@ -70,6 +70,10 @@ jobs:
               --head changeset-release/main
           fi
 
+      - name: Configure npm
+        if: steps.changesets.outputs.has_changesets == 'false'
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - name: Publish to npm
         if: steps.changesets.outputs.has_changesets == 'false'
         run: |
@@ -85,5 +89,3 @@ jobs:
           else
             echo "Version $CURRENT_VERSION already published, skipping"
           fi
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
