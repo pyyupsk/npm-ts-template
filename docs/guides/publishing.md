@@ -14,7 +14,7 @@ The template uses [Changesets](https://github.com/changesets/changesets) for:
 
 ### 1. Make Changes
 
-Develop your feature or fix on a branch:
+Develop your feature or fix:
 
 ```bash
 git checkout -b feat/my-feature
@@ -24,52 +24,97 @@ git commit -m "feat: add new feature"
 
 ### 2. Create a Changeset
 
-Before merging, create a changeset:
-
 ```bash
-bun run changeset
+bunx changeset
 ```
 
 This interactive prompt asks:
 
 1. **Which packages?** - Select your package
 2. **Bump type?** - major, minor, or patch
-3. **Summary?** - Describe the change
+3. **Summary?** - Brief description
 
-A file is created in `.changeset/`:
+Creates a file in `.changeset/`:
 
 ```markdown
 ---
-"your-package": minor
+"@pyyupsk/npm-ts-template": minor
 ---
 
-Add new feature for better UX
+Added new feature
 ```
 
-### 3. Commit the Changeset
+### 3. Format the Changeset
+
+Edit the changeset file to match Keep a Changelog format:
+
+```markdown
+---
+"@pyyupsk/npm-ts-template": minor
+---
+
+### Added
+
+- New feature X for better performance
+- New option `format` for custom output
+
+### Fixed
+
+- Null pointer error in parse function
+```
+
+This content will be added directly to `CHANGELOG.md`.
+
+> **Note:** Changeset files are linted with markdownlint before commit.
+
+### 4. Commit and Push
 
 ```bash
-git add .changeset
-git commit -m "chore: add changeset"
+git add .
+git commit -m "feat: add new feature"
 git push
 ```
 
-### 4. Merge to Main
+### 5. Release PR Created
 
-When your PR is merged, the release workflow:
+The release workflow automatically:
 
 1. Detects changeset files
-2. Creates a "Version Packages" PR
-3. This PR updates version and CHANGELOG.md
+2. Bumps version in `package.json`
+3. Updates `CHANGELOG.md` with your formatted content
+4. Creates PR: `chore(release): vX.X.X`
 
-### 5. Release
+### 6. Merge to Publish
 
-Merge the "Version Packages" PR to:
+Merge the release PR to:
 
-1. Update package.json version
-2. Update CHANGELOG.md
-3. Publish to npm
-4. Create a GitHub release
+1. Publish to npm
+2. Create GitHub release (via changelogithub)
+3. Push version tag
+
+## CHANGELOG Format
+
+We follow [Keep a Changelog](https://keepachangelog.com) format:
+
+```markdown
+## [1.2.0] - 2026-01-05
+
+### Added
+
+- New features
+
+### Changed
+
+- Changes to existing features
+
+### Fixed
+
+- Bug fixes
+
+### Removed
+
+- Removed features
+```
 
 ## Version Types
 
@@ -85,34 +130,42 @@ Merge the "Version Packages" PR to:
 
 ```markdown
 ---
-"your-package": patch
+"@pyyupsk/npm-ts-template": patch
 ---
 
-Fix null pointer error in parse function
+### Fixed
+
+- Null pointer error in parse function
+- Memory leak in event handler
 ```
 
 ### New Feature (minor)
 
 ```markdown
 ---
-"your-package": minor
+"@pyyupsk/npm-ts-template": minor
 ---
 
-Add `format` option to customize output
+### Added
+
+- `format` option to customize output
+- Support for async callbacks
 ```
 
 ### Breaking Change (major)
 
 ```markdown
 ---
-"your-package": major
+"@pyyupsk/npm-ts-template": major
 ---
 
-BREAKING: Rename `parse` to `parseInput`
+### Changed
 
-Migration:
+- **BREAKING:** Rename `parse` to `parseInput`
 
-- Replace `parse(x)` with `parseInput(x)`
+### Migration
+
+Replace `parse(x)` with `parseInput(x)`
 ```
 
 ## Configuration
@@ -139,6 +192,7 @@ We use `../node_modules/...` instead of remote URLs. This ensures the schema mat
 
 Key settings:
 
+- `changelog` - Changelog generator (uses content from changeset files)
 - `access: "public"` - Publish as public package
 - `baseBranch: "main"` - PR target branch
 
@@ -171,10 +225,11 @@ npm publish --access public
 
 ## Troubleshooting
 
-### "Version Packages" PR Not Created
+### Release PR Not Created
 
-- Ensure `.changeset/*.md` files exist
+- Ensure `.changeset/*.md` files exist (not just README.md)
 - Check GitHub Actions logs
+- Verify workflow has PR creation permissions
 
 ### Publish Failed
 
@@ -182,7 +237,17 @@ npm publish --access public
 - Check npm account permissions
 - Ensure package name is available
 
-### Wrong Version
+### Markdownlint Errors
 
-- Delete the changeset file
-- Create a new one with correct bump type
+Fix formatting issues in changeset files:
+
+```bash
+# Check manually
+bunx markdownlint-cli2 ".changeset/*.md"
+```
+
+Common fixes:
+
+- Add blank line after headings
+- Remove trailing spaces
+- Use consistent list markers
