@@ -35,8 +35,9 @@ After `bun run test:coverage`:
 
 ```
 coverage/
-├── lcov-report/    # HTML report
-└── lcov.info       # LCOV data for CI
+├── html/           # Interactive HTML report
+├── coverage-final.json  # JSON data for CI
+└── text output     # Terminal summary
 ```
 
 ## Lint Scripts

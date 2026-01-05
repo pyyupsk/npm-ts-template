@@ -45,6 +45,7 @@ export default defineConfig({
           { text: "Testing", link: "/guides/testing" },
           { text: "Publishing", link: "/guides/publishing" },
           { text: "CI/CD", link: "/guides/ci-cd" },
+          { text: "Documentation", link: "/guides/documentation" },
         ],
       },
       {

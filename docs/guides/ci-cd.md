@@ -101,6 +101,56 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+### Docs Workflow
+
+**File:** `.github/workflows/docs.yml`
+
+Builds and deploys the VitePress documentation site:
+
+```yaml
+name: Docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - run: bun run docs:build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/deploy-pages@v4
+```
+
+#### Setup Required
+
+1. Go to repo Settings → Pages
+2. Set Source to **"GitHub Actions"**
+
+#### What It Does
+
+1. Triggers when `docs/**` files change
+2. Builds VitePress site with `bun run docs:build`
+3. Deploys to GitHub Pages
+
 ## Branch Protection
 
 Recommended settings for the `main` branch:
@@ -116,10 +166,11 @@ Recommended settings for the `main` branch:
 
 Required secrets in repository settings:
 
-| Secret         | Purpose        | How to Get                |
-| -------------- | -------------- | ------------------------- |
-| `GITHUB_TOKEN` | Auto-provided  | Automatic                 |
-| `NPM_TOKEN`    | npm publishing | npmjs.com → Access Tokens |
+| Secret          | Purpose          | How to Get                |
+| --------------- | ---------------- | ------------------------- |
+| `GITHUB_TOKEN`  | Auto-provided    | Automatic                 |
+| `NPM_TOKEN`     | npm publishing   | npmjs.com → Access Tokens |
+| `CODECOV_TOKEN` | Coverage uploads | codecov.io → Settings     |
 
 ### Adding NPM_TOKEN
 
