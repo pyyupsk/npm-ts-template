@@ -1,7 +1,7 @@
-# npm-ts-template
+# @pyyupsk/npm-ts-template
 
 [![CI](https://github.com/pyyupsk/npm-ts-template/actions/workflows/ci.yml/badge.svg)](https://github.com/pyyupsk/npm-ts-template/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/npm-ts-template.svg)](https://www.npmjs.com/package/npm-ts-template)
+[![npm version](https://img.shields.io/npm/v/@pyyupsk/npm-ts-template.svg)](https://www.npmjs.com/package/@pyyupsk/npm-ts-template)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/pyyupsk/npm-ts-template/branch/main/graph/badge.svg)](https://codecov.io/gh/pyyupsk/npm-ts-template)
 
