@@ -1,9 +1,9 @@
-# npm-template
+# npm-ts-template
 
-[![CI](https://github.com/pyyupsk/npm-template/actions/workflows/ci.yml/badge.svg)](https://github.com/pyyupsk/npm-template/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/npm-template.svg)](https://www.npmjs.com/package/npm-template)
+[![CI](https://github.com/pyyupsk/npm-ts-template/actions/workflows/ci.yml/badge.svg)](https://github.com/pyyupsk/npm-ts-template/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/npm-ts-template.svg)](https://www.npmjs.com/package/npm-ts-template)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![codecov](https://codecov.io/gh/pyyupsk/npm-template/branch/main/graph/badge.svg)](https://codecov.io/gh/pyyupsk/npm-template)
+[![codecov](https://codecov.io/gh/pyyupsk/npm-ts-template/branch/main/graph/badge.svg)](https://codecov.io/gh/pyyupsk/npm-ts-template)
 
 A TypeScript library template with modern tooling.
 
@@ -20,17 +20,17 @@ A TypeScript library template with modern tooling.
 ## Installation
 
 ```bash
-bun add npm-template
+bun add npm-ts-template
 # or
-npm install npm-template
+npm install npm-ts-template
 # or
-pnpm add npm-template
+pnpm add npm-ts-template
 ```
 
 ## Usage
 
 ```typescript
-import { greet } from "npm-template";
+import { greet } from "npm-ts-template";
 
 console.log(greet("World")); // "Hello, World!"
 ```
@@ -46,8 +46,8 @@ console.log(greet("World")); // "Hello, World!"
 
 ```bash
 # Clone the repository
-git clone https://github.com/pyyupsk/npm-template.git
-cd npm-template
+git clone https://github.com/pyyupsk/npm-ts-template.git
+cd npm-ts-template
 
 # Install dependencies
 bun install
