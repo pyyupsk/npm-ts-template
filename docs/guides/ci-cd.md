@@ -151,16 +151,96 @@ jobs:
 2. Builds VitePress site with `bun run docs:build`
 3. Deploys to GitHub Pages
 
-## Branch Protection
+## Repository Settings
 
-Recommended settings for the `main` branch:
+### Merge Settings
 
-1. Go to Settings → Branches → Add rule
-2. Branch name pattern: `main`
-3. Enable:
-   - Require a pull request before merging
-   - Require status checks to pass
-   - Select: `build` job from CI workflow
+The template recommends squash merging for clean history:
+
+| Setting                | Value       | Purpose                        |
+| ---------------------- | ----------- | ------------------------------ |
+| Allow squash merging   | ✅ Enabled  | Clean, linear history          |
+| Allow merge commits    | ❌ Disabled | Avoid merge commit clutter     |
+| Allow rebase merging   | ❌ Disabled | Consistent merge strategy      |
+| Delete branch on merge | ✅ Enabled  | Auto-cleanup merged branches   |
+| Squash commit title    | PR Title    | Use PR title as commit message |
+| Squash commit message  | PR Body     | Include PR description         |
+
+#### Setup with GitHub CLI
+
+```bash
+gh api repos/OWNER/REPO -X PATCH \
+  -f delete_branch_on_merge=true \
+  -f allow_squash_merge=true \
+  -f allow_merge_commit=false \
+  -f allow_rebase_merge=false \
+  -f squash_merge_commit_title=PR_TITLE \
+  -f squash_merge_commit_message=PR_BODY
+```
+
+### Branch Protection
+
+Protect the `main` branch from direct pushes:
+
+| Setting                | Value      | Purpose                       |
+| ---------------------- | ---------- | ----------------------------- |
+| Required status checks | `ci`       | CI must pass before merge     |
+| Strict status checks   | ✅ Enabled | Branch must be up to date     |
+| Dismiss stale reviews  | ✅ Enabled | Re-review after new commits   |
+| Required approvals     | 0          | Self-merge allowed (template) |
+| Force pushes           | ❌ Blocked | Protect commit history        |
+| Deletions              | ❌ Blocked | Prevent accidental deletion   |
+
+#### Setup with GitHub CLI
+
+```bash
+gh api repos/OWNER/REPO/branches/main/protection -X PUT \
+  --input - << 'EOF'
+{
+  "required_status_checks": {
+    "strict": true,
+    "contexts": ["ci"]
+  },
+  "enforce_admins": false,
+  "required_pull_request_reviews": {
+    "required_approving_review_count": 0,
+    "dismiss_stale_reviews": true
+  },
+  "restrictions": null,
+  "allow_force_pushes": false,
+  "allow_deletions": false
+}
+EOF
+```
+
+### GitHub Pages
+
+Enable documentation site deployment:
+
+| Setting | Value                  | Purpose             |
+| ------- | ---------------------- | ------------------- |
+| Source  | GitHub Actions         | Deploy via workflow |
+| URL     | `OWNER.github.io/REPO` | Documentation site  |
+
+#### Setup with GitHub CLI
+
+```bash
+gh api repos/OWNER/REPO/pages -X PUT -f build_type=workflow
+```
+
+### Features
+
+| Feature     | Status      | Purpose                    |
+| ----------- | ----------- | -------------------------- |
+| Issues      | ✅ Enabled  | Bug reports and features   |
+| Discussions | ✅ Enabled  | Community Q&A              |
+| Wiki        | ❌ Disabled | Use VitePress docs instead |
+
+#### Enable Discussions
+
+```bash
+gh repo edit OWNER/REPO --enable-discussions
+```
 
 ## Secrets
 
