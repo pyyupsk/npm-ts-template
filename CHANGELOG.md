@@ -10,10 +10,14 @@ All notable changes to this project will be documented in this file.
 - ESLint with eslint-plugin-sonarjs for code quality analysis
 - VitePress documentation site with guides and configuration docs
 - GitHub Actions workflow for docs deployment to GitHub Pages
+- Markdownlint for changeset file validation
+- Custom release workflow with dynamic version in commit message
 
 ### Changed
 
 - README updated to focus on template usage with quick start guide
+- CHANGELOG.md now follows Keep a Changelog format
+- Release workflow uses custom script instead of changesets/action
 
 ## [0.0.0] - 2026-01-05
 
