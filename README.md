@@ -4,6 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/@pyyupsk/npm-ts-template.svg)](https://www.npmjs.com/package/@pyyupsk/npm-ts-template)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/pyyupsk/npm-ts-template/branch/main/graph/badge.svg)](https://codecov.io/gh/pyyupsk/npm-ts-template)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pyyupsk_npm-ts-template&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=pyyupsk_npm-ts-template)
 
 A TypeScript library template with modern tooling.
 
