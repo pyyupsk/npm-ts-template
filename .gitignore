@@ -24,6 +24,10 @@ logs/
 .eslintcache
 *.tsbuildinfo
 
+# VitePress
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+
 # IDE
 .idea/
 *.swp

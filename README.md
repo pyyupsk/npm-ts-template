@@ -1,103 +1,53 @@
-# @pyyupsk/npm-ts-template
+# npm-ts-template
 
 [![CI](https://github.com/pyyupsk/npm-ts-template/actions/workflows/ci.yml/badge.svg)](https://github.com/pyyupsk/npm-ts-template/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/@pyyupsk/npm-ts-template.svg)](https://www.npmjs.com/package/@pyyupsk/npm-ts-template)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![codecov](https://codecov.io/gh/pyyupsk/npm-ts-template/branch/main/graph/badge.svg)](https://codecov.io/gh/pyyupsk/npm-ts-template)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pyyupsk_npm-ts-template&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=pyyupsk_npm-ts-template)
 
-A TypeScript library template with modern tooling.
+A zero-config TypeScript library template with modern tooling. Start building your npm package in seconds.
+
+## Quick Start
+
+1. Click **[Use this template](https://github.com/pyyupsk/npm-ts-template/generate)** to create your repository
+2. Clone and install:
+
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+   cd YOUR_REPO
+   bun install
+   ```
+
+3. Update `package.json` with your package name and details
+4. Start coding in `src/index.ts`
 
 ## Features
 
-- TypeScript 5.x with strict mode
-- Dual ESM/CJS output via tsdown
-- Biome for linting and formatting
-- Vitest for testing with coverage
-- Lefthook for git hooks
-- Changesets for versioning
-- GitHub Actions for CI/CD
+- **TypeScript 5.x** with strict mode
+- **Dual ESM/CJS** output via tsdown
+- **Biome** for linting and formatting
+- **ESLint** with JSDoc and SonarJS for documentation and code quality
+- **Vitest** for testing with coverage
+- **Lefthook** for git hooks
+- **Changesets** for versioning and publishing
+- **GitHub Actions** for CI/CD
 
-## Installation
+## Documentation
 
-```bash
-bun add npm-ts-template
-# or
-npm install npm-ts-template
-# or
-pnpm add npm-ts-template
-```
+For detailed guides on configuration, testing, and publishing:
 
-## Usage
+**[View Documentation](https://pyyupsk.github.io/npm-ts-template/)**
 
-```typescript
-import { greet } from "npm-ts-template";
+## Scripts
 
-console.log(greet("World")); // "Hello, World!"
-```
-
-## Development
-
-### Prerequisites
-
-- [Bun](https://bun.sh/) 1.x or later
-- [Node.js](https://nodejs.org/) 20+ (for compatibility)
-
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/pyyupsk/npm-ts-template.git
-cd npm-ts-template
-
-# Install dependencies
-bun install
-```
-
-### Scripts
-
-| Script                  | Description                       |
-| ----------------------- | --------------------------------- |
-| `bun run build`         | Build ESM/CJS bundles to `dist/`  |
-| `bun run dev`           | Build in watch mode               |
-| `bun run test`          | Run tests once                    |
-| `bun run test:watch`    | Run tests in watch mode           |
-| `bun run test:coverage` | Run tests with coverage report    |
-| `bun run lint`          | Check code with Biome             |
-| `bun run lint:fix`      | Fix auto-fixable issues           |
-| `bun run format`        | Format code with Biome            |
-| `bun run typecheck`     | Check TypeScript types            |
-| `bun run knip`          | Check for unused code             |
-| `bun run changeset`     | Create a changeset for versioning |
-| `bun run release`       | Publish to npm (CI only)          |
-
-## API
-
-### `greet(name: string): string`
-
-Greets a person by name.
-
-**Parameters:**
-
-- `name` - The name of the person to greet
-
-**Returns:** A greeting message
-
-**Example:**
-
-```typescript
-greet("Alice"); // "Hello, Alice!"
-```
-
-## Publishing
-
-1. Create a changeset: `bun run changeset`
-2. Push to main branch
-3. Merge the "Version Packages" PR created by the release workflow
-4. Package is automatically published to npm
-
-**Note:** Requires `NPM_TOKEN` secret configured in GitHub repository settings.
+| Script              | Description            |
+| ------------------- | ---------------------- |
+| `bun run build`     | Build ESM/CJS bundles  |
+| `bun run dev`       | Build in watch mode    |
+| `bun run test`      | Run tests              |
+| `bun run lint`      | Check code quality     |
+| `bun run typecheck` | Check TypeScript types |
+| `bun run changeset` | Create a changeset     |
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). See the LICENSE file for details.
+[MIT](LICENSE)

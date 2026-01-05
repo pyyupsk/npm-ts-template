@@ -37,7 +37,10 @@
     "knip": "knip",
     "prepare": "lefthook install",
     "changeset": "changeset",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "engines": {
     "node": ">=20"
@@ -82,6 +85,7 @@
     "tsdown": "^0.19.0-beta.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.51.0",
+    "vitepress": "^1.6.4",
     "vitest": "^4.0.16"
   }
 }
