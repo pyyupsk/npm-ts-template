@@ -7,6 +7,10 @@ pre-commit:
     typecheck:
       glob: "*.{ts,tsx}"
       run: bun run typecheck
+    changeset:
+      glob: ".changeset/*.md"
+      exclude: ".changeset/README.md"
+      run: bunx markdownlint-cli2 {staged_files}
 
 commit-msg:
   commands:
