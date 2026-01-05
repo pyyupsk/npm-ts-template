@@ -72,10 +72,13 @@ jobs:
 
       - name: Configure npm
         if: steps.changesets.outputs.has_changesets == 'false'
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
 
       - name: Publish to npm
         if: steps.changesets.outputs.has_changesets == 'false'
+        id: publish
         run: |
           # Check if current version is already published
           CURRENT_VERSION=$(node -p "require('./package.json').version")
@@ -86,6 +89,12 @@ jobs:
           if [ -z "$PUBLISHED" ]; then
             echo "Publishing $PACKAGE_NAME@$CURRENT_VERSION"
             bun run release
+            echo "published=true" >> $GITHUB_OUTPUT
           else
             echo "Version $CURRENT_VERSION already published, skipping"
+            echo "published=false" >> $GITHUB_OUTPUT
           fi
+
+      - name: Push tags
+        if: steps.publish.outputs.published == 'true'
+        run: git push --tags
