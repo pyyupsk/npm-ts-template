@@ -74,8 +74,12 @@ jobs:
 
       # Version and create PR if changesets exist
       - if: steps.changesets.outputs.has_changesets == 'true'
+        run: bunx changeset version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: steps.changesets.outputs.has_changesets == 'true'
         run: |
-          bunx changeset version
           VERSION=$(node -p "require('./package.json').version")
           git add -A
           git commit -m "chore(release): v$VERSION" --no-verify
