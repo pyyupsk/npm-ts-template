@@ -4,7 +4,16 @@ export default defineConfig({
   title: "npm-ts-template",
   description: "A zero-config TypeScript library template with modern tooling",
   base: "/npm-ts-template/",
-  head: [["link", { rel: "icon", href: "/npm-ts-template/favicon.ico" }]],
+  head: [
+    [
+      "link",
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: "/npm-ts-template/favicon.svg",
+      },
+    ],
+  ],
 
   themeConfig: {
     nav: [
