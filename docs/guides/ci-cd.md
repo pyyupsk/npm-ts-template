@@ -59,15 +59,39 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: oven-sh/setup-bun@v2
       - run: bun install
-      - uses: changesets/action@v1
-        with:
-          publish: bun run release
+      - run: bun run build
+
+      # Check for changesets
+      - id: changesets
+        run: |
+          if [ -n "$(ls -A .changeset/*.md 2>/dev/null | grep -v README.md)" ]; then
+            echo "has_changesets=true" >> $GITHUB_OUTPUT
+          fi
+
+      # Version and create PR if changesets exist
+      - if: steps.changesets.outputs.has_changesets == 'true'
+        run: |
+          bunx changeset version
+          VERSION=$(node -p "require('./package.json').version")
+          git add -A
+          git commit -m "chore(release): v$VERSION" --no-verify
+          git push origin HEAD:changeset-release/main -f
+          gh pr create --title "chore(release): v$VERSION" --base main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Publish if no changesets (PR was merged)
+      - if: steps.changesets.outputs.has_changesets != 'true'
+        run: bun run release
+        env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
+
+> **Note:** Uses `--no-verify` to bypass git hooks in CI. Commit message includes dynamic version from package.json.
 
 #### What It Does
 
