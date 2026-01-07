@@ -44,26 +44,21 @@ Creates a file in `.changeset/`:
 Added new feature
 ```
 
-### 3. Format the Changeset
+### 3. Write the Changeset Summary
 
-Edit the changeset file to match Keep a Changelog format:
+Edit the changeset file with a brief description of changes:
 
 ```markdown
 ---
 "@pyyupsk/npm-ts-template": minor
 ---
 
-### Added
-
-- New feature X for better performance
-- New option `format` for custom output
-
-### Fixed
-
-- Null pointer error in parse function
+- Added new feature X for better performance
+- Added new option `format` for custom output
+- Fixed null pointer error in parse function
 ```
 
-This content will be added directly to `CHANGELOG.md`.
+This content will be added to `CHANGELOG.md` under the appropriate version header.
 
 > **Note:** Changeset files are linted with markdownlint before commit.
 
@@ -94,26 +89,19 @@ Merge the release PR to:
 
 ## CHANGELOG Format
 
-We follow [Keep a Changelog](https://keepachangelog.com) format:
+Changesets generates the changelog automatically:
 
 ```markdown
-## [1.2.0] - 2026-01-05
+## 1.2.0
 
-### Added
+### Minor Changes
 
-- New features
+- Added new feature X
+- Added option `format` for custom output
 
-### Changed
+### Patch Changes
 
-- Changes to existing features
-
-### Fixed
-
-- Bug fixes
-
-### Removed
-
-- Removed features
+- Fixed null pointer error in parse function
 ```
 
 ## Version Types
@@ -133,10 +121,8 @@ We follow [Keep a Changelog](https://keepachangelog.com) format:
 "@pyyupsk/npm-ts-template": patch
 ---
 
-### Fixed
-
-- Null pointer error in parse function
-- Memory leak in event handler
+- Fixed null pointer error in parse function
+- Fixed memory leak in event handler
 ```
 
 ### New Feature (minor)
@@ -146,10 +132,8 @@ We follow [Keep a Changelog](https://keepachangelog.com) format:
 "@pyyupsk/npm-ts-template": minor
 ---
 
-### Added
-
-- `format` option to customize output
-- Support for async callbacks
+- Added `format` option to customize output
+- Added support for async callbacks
 ```
 
 ### Breaking Change (major)
@@ -159,13 +143,8 @@ We follow [Keep a Changelog](https://keepachangelog.com) format:
 "@pyyupsk/npm-ts-template": major
 ---
 
-### Changed
-
-- **BREAKING:** Rename `parse` to `parseInput`
-
-### Migration
-
-Replace `parse(x)` with `parseInput(x)`
+- **BREAKING:** Renamed `parse` to `parseInput`
+- Migration: Replace `parse(x)` with `parseInput(x)`
 ```
 
 ## Configuration

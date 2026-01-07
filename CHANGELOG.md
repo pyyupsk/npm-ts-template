@@ -4,42 +4,27 @@
 
 ### Patch Changes
 
-- 5d060c9: ### Changed
+- Refactored release workflow to use official `changesets/action`
+- Extended `@tsconfig/strictest` for multi-target flexibility
+- Updated changelog format to match changesets style
+- Fixed CI workflow npm authentication and tag publishing
+- Fixed release workflow issues
+- Fixed esbuild vulnerability (GHSA-67mh-4wv8-2f99) via package override
 
-  - Refactored release workflow to use official `changesets/action`
-  - Extended `@tsconfig/strictest` for multi-target flexibility
+## 0.1.0
 
-  ### Fixed
+### Minor Changes
 
-  - CI workflow npm authentication and tag publishing
-  - Release workflow issues
+- Added ESLint with eslint-plugin-jsdoc for documentation enforcement
+- Added ESLint with eslint-plugin-sonarjs for code quality analysis
+- Added VitePress documentation site with guides and configuration docs
+- Added GitHub Actions workflow for docs deployment to GitHub Pages
+- Added Markdownlint for changeset file validation
+- Updated README to focus on template usage with quick start guide
 
-  ### Security
+## 0.0.0
 
-  - Fixed esbuild vulnerability (GHSA-67mh-4wv8-2f99) via package override
-
-All notable changes to this project will be documented in this file.
-
-## [0.1.0] - 2026-01-05
-
-### Added
-
-- ESLint with eslint-plugin-jsdoc for documentation enforcement
-- ESLint with eslint-plugin-sonarjs for code quality analysis
-- VitePress documentation site with guides and configuration docs
-- GitHub Actions workflow for docs deployment to GitHub Pages
-- Markdownlint for changeset file validation
-- Custom release workflow with dynamic version in commit message
-
-### Changed
-
-- README updated to focus on template usage with quick start guide
-- CHANGELOG.md now follows Keep a Changelog format
-- Release workflow uses custom script instead of changesets/action
-
-## [0.0.0] - 2026-01-05
-
-### Added
+### Initial Release
 
 - Initial TypeScript library template with Bun, tsdown, Biome, Vitest
 - Lefthook for git hooks with commitlint
