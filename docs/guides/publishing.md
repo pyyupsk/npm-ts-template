@@ -77,12 +77,12 @@ git push
 
 ### 5. Release PR Created
 
-The release workflow automatically:
+The release workflow (using [changesets/action](https://github.com/changesets/action)) automatically:
 
 1. Detects changeset files
 2. Bumps version in `package.json`
 3. Updates `CHANGELOG.md` with your formatted content
-4. Creates PR: `chore(release): vX.X.X`
+4. Creates PR: `chore(release): version packages`
 
 ### 6. Merge to Publish
 

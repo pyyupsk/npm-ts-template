@@ -45,7 +45,7 @@ jobs:
 
 **File:** `.github/workflows/release.yml`
 
-Handles versioning and publishing:
+Handles versioning and publishing using the official [changesets/action](https://github.com/changesets/action):
 
 ```yaml
 name: Release
@@ -65,37 +65,27 @@ jobs:
       - run: bun install
       - run: bun run build
 
-      # Check for changesets
-      - id: changesets
-        run: |
-          if [ -n "$(ls -A .changeset/*.md 2>/dev/null | grep -v README.md)" ]; then
-            echo "has_changesets=true" >> $GITHUB_OUTPUT
-          fi
-
-      # Version and create PR if changesets exist
-      - if: steps.changesets.outputs.has_changesets == 'true'
-        run: bunx changeset version
+      - name: Create Release PR or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: bun run changeset version && bun run format
+          publish: bun run release
+          title: "chore(release): version packages"
+          commit: "chore(release): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - if: steps.changesets.outputs.has_changesets == 'true'
+      - name: Create and push version tag
+        if: steps.changesets.outputs.published == 'true'
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          git add -A
-          git commit -m "chore(release): v$VERSION" --no-verify
-          git push origin HEAD:changeset-release/main -f
-          gh pr create --title "chore(release): v$VERSION" --base main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Publish if no changesets (PR was merged)
-      - if: steps.changesets.outputs.has_changesets != 'true'
-        run: bun run release
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          git tag -a "v$VERSION" -m "v$VERSION"
+          git push origin "v$VERSION"
 ```
 
-> **Note:** Uses `--no-verify` to bypass git hooks in CI. Commit message includes dynamic version from package.json.
+> **Note:** The `changesets/action` handles changeset detection, PR creation, and publishing automatically.
 
 #### What It Does
 
