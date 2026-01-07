@@ -34,15 +34,13 @@ jobs:
           publish: bun run release
           title: "chore(release): version packages"
           commit: "chore(release): version packages"
+          createGithubReleases: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create and push version tag
+      - name: Generate Release Notes
         if: steps.changesets.outputs.published == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          VERSION=$(node -p "require('./package.json').version")
-          git tag -a "v$VERSION" -m "v$VERSION"
-          git push origin "v$VERSION"
+        run: bunx changelogithub
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
