@@ -41,6 +41,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Format generated files
+        if: steps.changesets.outputs.has_changesets == 'true'
+        run: bun run format
+
       - name: Get version
         if: steps.changesets.outputs.has_changesets == 'true'
         id: version
@@ -95,6 +99,11 @@ jobs:
             echo "published=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Push tags
+      - name: Create and push version tag
         if: steps.publish.outputs.published == 'true'
-        run: git push --tags
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          VERSION=$(node -p "require('./package.json').version")
+          git tag -a "v$VERSION" -m "v$VERSION"
+          git push origin "v$VERSION"
