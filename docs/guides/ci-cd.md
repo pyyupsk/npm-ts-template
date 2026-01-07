@@ -102,6 +102,17 @@ jobs:
 1. Detects changeset files
 2. Creates "Version Packages" PR if changesets exist
 3. When PR is merged, publishes to npm
+4. Creates and pushes `v{version}` tag after publish
+
+#### Required Permissions
+
+For organizations, you must enable GitHub Actions to create pull requests:
+
+1. Go to repository **Settings** → **Actions** → **General**
+2. Scroll to **Workflow permissions**
+3. Enable **"Allow GitHub Actions to create and approve pull requests"**
+
+Without this setting, the release workflow will fail when trying to create the version PR.
 
 ### Changelog Workflow
 
