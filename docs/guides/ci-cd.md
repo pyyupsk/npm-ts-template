@@ -69,7 +69,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          version: bash -c "bunx changeset version && bun run format"
+          version: bash -c 'bunx changeset version && bun run format'
           publish: bun run release
           title: "chore(release): version packages"
           commit: "chore(release): version packages"
