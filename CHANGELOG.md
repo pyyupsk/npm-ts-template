@@ -1,27 +1,30 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## 0.1.1
 
-## [0.1.0] - 2026-01-05
+### Patch Changes
 
-### Added
+- Refactored release workflow to use official `changesets/action`
+- Extended `@tsconfig/strictest` for multi-target flexibility
+- Updated changelog format to match changesets style
+- Fixed CI workflow npm authentication and tag publishing
+- Fixed release workflow issues
+- Fixed esbuild vulnerability (GHSA-67mh-4wv8-2f99) via package override
 
-- ESLint with eslint-plugin-jsdoc for documentation enforcement
-- ESLint with eslint-plugin-sonarjs for code quality analysis
-- VitePress documentation site with guides and configuration docs
-- GitHub Actions workflow for docs deployment to GitHub Pages
-- Markdownlint for changeset file validation
-- Custom release workflow with dynamic version in commit message
+## 0.1.0
 
-### Changed
+### Minor Changes
 
-- README updated to focus on template usage with quick start guide
-- CHANGELOG.md now follows Keep a Changelog format
-- Release workflow uses custom script instead of changesets/action
+- Added ESLint with eslint-plugin-jsdoc for documentation enforcement
+- Added ESLint with eslint-plugin-sonarjs for code quality analysis
+- Added VitePress documentation site with guides and configuration docs
+- Added GitHub Actions workflow for docs deployment to GitHub Pages
+- Added Markdownlint for changeset file validation
+- Updated README to focus on template usage with quick start guide
 
-## [0.0.0] - 2026-01-05
+## 0.0.0
 
-### Added
+### Initial Release
 
 - Initial TypeScript library template with Bun, tsdown, Biome, Vitest
 - Lefthook for git hooks with commitlint
