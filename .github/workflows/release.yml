@@ -30,7 +30,7 @@ jobs:
         id: changesets
         uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
         with:
-          version: bash -c 'bunx changeset version && bun run format'
+          version: bun run changeset:version
           publish: bun run release
           title: "chore(release): version packages"
           commit: "chore(release): version packages"

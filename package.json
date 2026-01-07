@@ -37,6 +37,7 @@
     "knip": "knip",
     "prepare": "lefthook install",
     "changeset": "changeset",
+    "changeset:version": "changeset version && bun run format",
     "release": "changeset publish",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
