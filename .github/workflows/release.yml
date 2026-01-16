@@ -26,6 +26,10 @@ jobs:
 
       - uses: oven-sh/setup-bun@db6bcf6eb8d88a8aa03265b887ec7bd84d64cd68 # v2.1.1
 
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          registry-url: "https://registry.npmjs.org"
+
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
@@ -58,6 +62,7 @@ jobs:
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Commit and push changes
         env:
