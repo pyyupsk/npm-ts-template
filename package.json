@@ -36,9 +36,6 @@
     "typecheck": "tsc --noEmit",
     "knip": "knip",
     "prepare": "lefthook install",
-    "changeset": "changeset",
-    "changeset:version": "changeset version && bun run format",
-    "release": "changeset publish",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
@@ -71,7 +68,6 @@
   "devDependencies": {
     "@biomejs/biome": "^2.3.11",
     "@tsconfig/strictest": "^2.0.8",
-    "@changesets/cli": "^2.29.8",
     "@commitlint/cli": "^20.3.0",
     "@commitlint/config-conventional": "^20.3.0",
     "@commitlint/types": "^20.2.0",

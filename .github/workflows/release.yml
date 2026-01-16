@@ -1,10 +1,16 @@
 name: Release
 
 on:
-  push:
-    branches: [main]
-
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version bump type"
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 jobs:
   release:
@@ -12,13 +18,18 @@ jobs:
     permissions:
       contents: write
       id-token: write
-      pull-requests: write
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: oven-sh/setup-bun@b7a1c7ccf290d58743029c4f6903da283811b979 # v2.1.0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Install dependencies
         run: bun install
@@ -26,21 +37,42 @@ jobs:
       - name: Build
         run: bun run build
 
-      - name: Create Release PR or Publish
-        id: changesets
-        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
-        with:
-          version: bun run changeset:version
-          publish: bun run release
-          title: "chore(release): version packages"
-          commit: "chore(release): version packages"
-          createGithubReleases: false
+      - name: Bump version
+        id: version
+        env:
+          VERSION_TYPE: ${{ inputs.version }}
+        run: |
+          npm version "$VERSION_TYPE" --no-git-tag-version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Generate CHANGELOG
+        run: bunx changelogithub --output CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Generate Release Notes
-        if: steps.changesets.outputs.published == 'true'
+      - name: Setup npm auth
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+
+      - name: Commit and push changes
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.new_version }}
+        run: |
+          git add package.json CHANGELOG.md
+          git commit -m "chore(release): v$NEW_VERSION"
+          git push origin main
+
+      - name: Create and push tag
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.new_version }}
+        run: |
+          git tag "v$NEW_VERSION"
+          git push origin "v$NEW_VERSION"
+
+      - name: Create GitHub Release
         run: bunx changelogithub
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
