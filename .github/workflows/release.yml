@@ -54,11 +54,10 @@ jobs:
       - name: Format CHANGELOG
         run: bunx markdownlint-cli2 --fix "CHANGELOG.md"
 
-      - name: Setup npm auth
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-
       - name: Publish to npm
         run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Commit and push changes
         env:
