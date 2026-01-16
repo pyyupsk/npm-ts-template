@@ -47,9 +47,12 @@ jobs:
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
       - name: Generate CHANGELOG
-        run: bunx changelogithub --output CHANGELOG.md
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NEW_VERSION: ${{ steps.version.outputs.new_version }}
+        run: bunx git-cliff --tag "v$NEW_VERSION" -o CHANGELOG.md
+
+      - name: Format CHANGELOG
+        run: bunx markdownlint-cli2 --fix "CHANGELOG.md"
 
       - name: Setup npm auth
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc

@@ -1,32 +1,72 @@
 # Changelog
 
-## 0.1.1
+All notable changes to this project will be documented in this file.
 
-### Patch Changes
+## [unreleased]
 
-- Refactored release workflow to use official `changesets/action`
-- Extended `@tsconfig/strictest` for multi-target flexibility
-- Updated changelog format to match changesets style
-- Fixed CI workflow npm authentication and tag publishing
-- Fixed release workflow issues
-- Fixed esbuild vulnerability (GHSA-67mh-4wv8-2f99) via package override
+### 🐛 Bug Fixes
 
-## 0.1.0
+- *(ci)* Integrate changelogithub into release workflow
 
-### Minor Changes
+### 🚜 Refactor
 
-- Added ESLint with eslint-plugin-jsdoc for documentation enforcement
-- Added ESLint with eslint-plugin-sonarjs for code quality analysis
-- Added VitePress documentation site with guides and configuration docs
-- Added GitHub Actions workflow for docs deployment to GitHub Pages
-- Added Markdownlint for changeset file validation
-- Updated README to focus on template usage with quick start guide
+- *(ci)* Replace changesets with manual release workflow
 
-## 0.0.0
+## [0.1.1] - 2026-01-07
 
-### Initial Release
+### 🐛 Bug Fixes
 
-- Initial TypeScript library template with Bun, tsdown, Biome, Vitest
-- Lefthook for git hooks with commitlint
-- Changesets for versioning and publishing
-- GitHub Actions for CI/CD
+- *(ci)* Configure npm auth for publishing
+- *(ci)* Pass npm token via env variable, push tags after publish
+- *(ci)* Resolve release workflow issues ([#3](https://github.com/pyyupsk/npm-ts-template/issues/3))
+- *(deps)* Override esbuild to fix security vulnerability
+- *(ci)* Wrap version command in bash for shell operators
+- *(ci)* Use single quotes for bash command
+- *(ci)* Add changeset:version script to avoid shell quoting issues
+
+### 🚜 Refactor
+
+- *(ts)* Extend `@tsconfig/strictest` for multi-target flexibility
+- *(ci)* Use changesets/action for release workflow
+
+### ⚙️ Miscellaneous Tasks
+
+- Add changeset for v0.1.1
+
+## [0.1.0] - 2026-01-05
+
+### 🚀 Features
+
+- Add ESLint with JSDoc linting
+- Add SonarJS ESLint plugin for code quality analysis
+
+### 🐛 Bug Fixes
+
+- *(ci)* Use dynamic version in release commit message
+- *(ci)* Add GITHUB_TOKEN for changelog-github plugin
+
+### 📚 Documentation
+
+- Add VitePress documentation site
+- Add favicon for documentation site
+- Add documentation guide and update CI/CD guide
+- Add repository settings documentation to CI/CD guide
+
+### ⚙️ Miscellaneous Tasks
+
+- Add GitHub Actions workflow for docs deployment
+- Move permissions to job level in docs workflow
+- Add changeset for v0.1.0 and configure changelog-github
+
+## [0.0.0] - 2026-01-05
+
+### 🚀 Features
+
+- Add project tooling, source, and tests
+- Add GitHub workflows and project configuration
+- Add changelog workflow for release notes generation
+
+### ⚙️ Miscellaneous Tasks
+
+- Initial project setup
+- Scope package under @pyyupsk namespace
