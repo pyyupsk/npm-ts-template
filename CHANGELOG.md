@@ -2,11 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [0.1.2] - 2026-01-16
+
+### 🚀 Features
+
+- *(ci)* Switch to git-cliff for changelog generation
 
 ### 🐛 Bug Fixes
 
 - *(ci)* Integrate changelogithub into release workflow
+- *(ci)* Avoid expanding secrets in run block
+- *(ci)* Use setup-node for secure npm authentication
+- *(ci)* Use GH_PAT for checkout to bypass branch ruleset
 
 ### 🚜 Refactor
 
