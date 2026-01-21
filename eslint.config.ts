@@ -1,16 +1,20 @@
 import js from "@eslint/js";
 import { defineConfig } from "eslint/config";
+import eslintConfigPrettier from "eslint-config-prettier";
 import jsdoc from "eslint-plugin-jsdoc";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 import sonarjs from "eslint-plugin-sonarjs";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
+const JS_TS_FILES = "**/*.{js,mjs,cjs,ts,mts,cts}";
+
 export default defineConfig([
   {
-    ignores: ["**/.vitepress/cache/**", "**/.vitepress/dist/**"],
+    ignores: ["**/.vitepress/cache/**", "**/.vitepress/dist/**", "dist/**"],
   },
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+    files: [JS_TS_FILES],
     plugins: { js },
     extends: ["js/recommended"],
     languageOptions: { globals: globals.node },
@@ -18,7 +22,17 @@ export default defineConfig([
   tseslint.configs.recommended,
   sonarjs.configs.recommended,
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+    files: [JS_TS_FILES],
+    plugins: {
+      "simple-import-sort": simpleImportSort,
+    },
+    rules: {
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
+    },
+  },
+  {
+    files: [JS_TS_FILES],
     rules: {
       // ===== SonarJS Rules =====
 
@@ -101,4 +115,6 @@ export default defineConfig([
       "jsdoc/no-types": "error",
     },
   },
+  // Must be last to disable formatting rules that conflict with Prettier
+  eslintConfigPrettier,
 ]);

@@ -8,7 +8,7 @@ const config: UserConfig = {
         "no-at-mentions": ({ body, subject }) => {
           const text = `${subject || ""} ${body || ""}`.replaceAll(
             /`[^`]*`/g,
-            "",
+            ""
           );
 
           const mentionPattern = /@[a-zA-Z][a-zA-Z0-9_-]*/g;
