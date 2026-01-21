@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2026-01-21
+
+### ⚙️ Miscellaneous Tasks
+
+- Update README, add preact override, and run Prettier in release
+
 ## [0.2.0] - 2026-01-21
 
 ### 🚀 Features
