@@ -54,7 +54,7 @@
     "prettier",
     "eslint",
     "vitest",
-    "changesets",
+    "git-cliff",
     "esm",
     "cjs"
   ],
@@ -93,6 +93,7 @@
     "vitest": "^4.0.17"
   },
   "overrides": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "preact": "^10.28.2"
   }
 }

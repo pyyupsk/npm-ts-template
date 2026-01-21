@@ -56,7 +56,9 @@ jobs:
         run: bunx git-cliff --tag "v$NEW_VERSION" -o CHANGELOG.md
 
       - name: Format CHANGELOG
-        run: bunx markdownlint-cli2 --fix "CHANGELOG.md"
+        run: |
+          bunx markdownlint-cli2 --fix "CHANGELOG.md"
+          bun run format
 
       - name: Publish to npm
         run: npm publish --provenance --access public
