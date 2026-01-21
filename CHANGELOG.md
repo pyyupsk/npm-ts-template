@@ -2,39 +2,53 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2026-01-21
+
+### 🚀 Features
+
+- Add repository setup script and Dependabot config
+
+### 🚜 Refactor
+
+- *(tooling)* Migrate from Biome to Prettier and ESLint
+
+### 📚 Documentation
+
+- Update documentation for Prettier and git-cliff migration
+
 ## [0.1.2] - 2026-01-16
 
 ### 🚀 Features
 
-- _(ci)_ Switch to git-cliff for changelog generation
+- *(ci)* Switch to git-cliff for changelog generation
 
 ### 🐛 Bug Fixes
 
-- _(ci)_ Integrate changelogithub into release workflow
-- _(ci)_ Avoid expanding secrets in run block
-- _(ci)_ Use setup-node for secure npm authentication
-- _(ci)_ Use GH_PAT for checkout to bypass branch ruleset
+- *(ci)* Integrate changelogithub into release workflow
+- *(ci)* Avoid expanding secrets in run block
+- *(ci)* Use setup-node for secure npm authentication
+- *(ci)* Use GH_PAT for checkout to bypass branch ruleset
 
 ### 🚜 Refactor
 
-- _(ci)_ Replace changesets with manual release workflow
+- *(ci)* Replace changesets with manual release workflow
 
 ## [0.1.1] - 2026-01-07
 
 ### 🐛 Bug Fixes
 
-- _(ci)_ Configure npm auth for publishing
-- _(ci)_ Pass npm token via env variable, push tags after publish
-- _(ci)_ Resolve release workflow issues ([#3](https://github.com/pyyupsk/npm-ts-template/issues/3))
-- _(deps)_ Override esbuild to fix security vulnerability
-- _(ci)_ Wrap version command in bash for shell operators
-- _(ci)_ Use single quotes for bash command
-- _(ci)_ Add changeset:version script to avoid shell quoting issues
+- *(ci)* Configure npm auth for publishing
+- *(ci)* Pass npm token via env variable, push tags after publish
+- *(ci)* Resolve release workflow issues ([#3](https://github.com/pyyupsk/npm-ts-template/issues/3))
+- *(deps)* Override esbuild to fix security vulnerability
+- *(ci)* Wrap version command in bash for shell operators
+- *(ci)* Use single quotes for bash command
+- *(ci)* Add changeset:version script to avoid shell quoting issues
 
 ### 🚜 Refactor
 
-- _(ts)_ Extend `@tsconfig/strictest` for multi-target flexibility
-- _(ci)_ Use changesets/action for release workflow
+- *(ts)* Extend `@tsconfig/strictest` for multi-target flexibility
+- *(ci)* Use changesets/action for release workflow
 
 ### ⚙️ Miscellaneous Tasks
 
@@ -49,8 +63,8 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
-- _(ci)_ Use dynamic version in release commit message
-- _(ci)_ Add GITHUB_TOKEN for changelog-github plugin
+- *(ci)* Use dynamic version in release commit message
+- *(ci)* Add GITHUB_TOKEN for changelog-github plugin
 
 ### 📚 Documentation
 
