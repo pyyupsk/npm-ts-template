@@ -42,13 +42,14 @@ coverage/
 
 ## Lint Scripts
 
-| Script      | Command                                 | Description             |
-| ----------- | --------------------------------------- | ----------------------- |
-| `lint`      | `biome check . && eslint`               | Check code quality      |
-| `lint:fix`  | `biome check --write . && eslint --fix` | Fix auto-fixable issues |
-| `lint:docs` | `eslint`                                | Check JSDoc only        |
-| `format`    | `biome format --write .`                | Format code             |
-| `typecheck` | `tsc --noEmit`                          | Check TypeScript types  |
+| Script         | Command                | Description             |
+| -------------- | ---------------------- | ----------------------- |
+| `lint`         | `eslint --cache`       | Check code quality      |
+| `lint:fix`     | `eslint --fix --cache` | Fix auto-fixable issues |
+| `lint:docs`    | `eslint --cache`       | Check JSDoc only        |
+| `format`       | `prettier --write .`   | Format code             |
+| `format:check` | `prettier --check .`   | Check formatting (CI)   |
+| `typecheck`    | `tsc --noEmit`         | Check TypeScript types  |
 
 ## Quality Scripts
 
@@ -65,12 +66,9 @@ Shows unused:
 - Files
 - Types
 
-## Release Scripts
+## Release
 
-| Script      | Command             | Description              |
-| ----------- | ------------------- | ------------------------ |
-| `changeset` | `changeset`         | Create a changeset       |
-| `release`   | `changeset publish` | Publish to npm (CI only) |
+Releases are handled via manual workflow dispatch in GitHub Actions. See [Publishing Guide](/guides/publishing) for details.
 
 ## Documentation Scripts
 

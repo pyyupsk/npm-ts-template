@@ -1,179 +1,123 @@
 # Publishing
 
-This guide covers the publishing workflow using Changesets.
+This guide covers the publishing workflow using git-cliff and manual releases.
 
 ## Overview
 
-The template uses [Changesets](https://github.com/changesets/changesets) for:
+The template uses:
 
-- Version management
-- Changelog generation
-- Automated npm publishing
+- **git-cliff** for changelog generation from conventional commits
+- **Manual workflow dispatch** for version bumps
+- **npm provenance** for supply chain security
 
 ## Workflow
 
 ### 1. Make Changes
 
-Develop your feature or fix:
+Develop your feature or fix using conventional commits:
 
 ```bash
 git checkout -b feat/my-feature
 # Make changes
 git commit -m "feat: add new feature"
+git push origin feat/my-feature
 ```
 
-### 2. Create a Changeset
+### 2. Create Pull Request
+
+Open a PR and merge to `main` after review.
+
+### 3. Trigger Release
+
+1. Go to **Actions** → **Release** workflow
+2. Click **Run workflow**
+3. Select version bump type:
+   - `patch` - Bug fixes (1.0.0 → 1.0.1)
+   - `minor` - New features (1.0.0 → 1.1.0)
+   - `major` - Breaking changes (1.0.0 → 2.0.0)
+4. Click **Run workflow**
+
+### 4. Automatic Steps
+
+The workflow automatically:
+
+1. Bumps version in `package.json`
+2. Generates `CHANGELOG.md` from commits
+3. Publishes to npm with provenance
+4. Commits and pushes changes
+5. Creates git tag (`v1.2.3`)
+6. Creates GitHub release with notes
+
+## Commit Convention
+
+git-cliff parses [Conventional Commits](https://www.conventionalcommits.org/):
+
+| Type       | Description             | Changelog Section |
+| ---------- | ----------------------- | ----------------- |
+| `feat`     | New feature             | 🚀 Features       |
+| `fix`      | Bug fix                 | 🐛 Bug Fixes      |
+| `docs`     | Documentation           | 📚 Documentation  |
+| `perf`     | Performance improvement | ⚡ Performance    |
+| `refactor` | Code refactoring        | 🚜 Refactor       |
+| `test`     | Adding tests            | 🧪 Testing        |
+| `chore`    | Maintenance tasks       | ⚙️ Miscellaneous  |
+
+### Examples
 
 ```bash
-bunx changeset
+# Feature
+git commit -m "feat: add dark mode toggle"
+
+# Bug fix with scope
+git commit -m "fix(auth): resolve token refresh issue"
+
+# Breaking change
+git commit -m "feat!: rename parse to parseInput"
 ```
-
-This interactive prompt asks:
-
-1. **Which packages?** - Select your package
-2. **Bump type?** - major, minor, or patch
-3. **Summary?** - Brief description
-
-Creates a file in `.changeset/`:
-
-```markdown
----
-"@pyyupsk/npm-ts-template": minor
----
-
-Added new feature
-```
-
-### 3. Write the Changeset Summary
-
-Edit the changeset file with a brief description of changes:
-
-```markdown
----
-"@pyyupsk/npm-ts-template": minor
----
-
-- Added new feature X for better performance
-- Added new option `format` for custom output
-- Fixed null pointer error in parse function
-```
-
-This content will be added to `CHANGELOG.md` under the appropriate version header.
-
-> **Note:** Changeset files are linted with markdownlint before commit.
-
-### 4. Commit and Push
-
-```bash
-git add .
-git commit -m "feat: add new feature"
-git push
-```
-
-### 5. Release PR Created
-
-The release workflow (using [changesets/action](https://github.com/changesets/action)) automatically:
-
-1. Detects changeset files
-2. Bumps version in `package.json`
-3. Updates `CHANGELOG.md` with your formatted content
-4. Creates PR: `chore(release): version packages`
-
-### 6. Merge to Publish
-
-Merge the release PR to:
-
-1. Publish to npm
-2. Create GitHub release (via changelogithub)
-3. Push version tag
 
 ## CHANGELOG Format
 
-Changesets generates the changelog automatically:
+git-cliff generates changelogs automatically:
 
 ```markdown
-## 1.2.0
+## [1.2.0] - 2026-01-21
 
-### Minor Changes
+### 🚀 Features
 
-- Added new feature X
-- Added option `format` for custom output
+- Add dark mode toggle
+- _(auth)_ Add OAuth2 support
 
-### Patch Changes
+### 🐛 Bug Fixes
 
-- Fixed null pointer error in parse function
-```
-
-## Version Types
-
-| Type    | When to Use                       | Example       |
-| ------- | --------------------------------- | ------------- |
-| `patch` | Bug fixes, no API changes         | 1.0.0 → 1.0.1 |
-| `minor` | New features, backward compatible | 1.0.0 → 1.1.0 |
-| `major` | Breaking changes                  | 1.0.0 → 2.0.0 |
-
-## Changeset Examples
-
-### Bug Fix (patch)
-
-```markdown
----
-"@pyyupsk/npm-ts-template": patch
----
-
-- Fixed null pointer error in parse function
-- Fixed memory leak in event handler
-```
-
-### New Feature (minor)
-
-```markdown
----
-"@pyyupsk/npm-ts-template": minor
----
-
-- Added `format` option to customize output
-- Added support for async callbacks
-```
-
-### Breaking Change (major)
-
-```markdown
----
-"@pyyupsk/npm-ts-template": major
----
-
-- **BREAKING:** Renamed `parse` to `parseInput`
-- Migration: Replace `parse(x)` with `parseInput(x)`
+- _(auth)_ Resolve token refresh issue
 ```
 
 ## Configuration
 
-The `.changeset/config.json` controls behavior:
+The `cliff.toml` controls changelog generation:
 
-::: tip Why local `$schema`?
-We use `../node_modules/...` instead of remote URLs. This ensures the schema matches your installed package version, works offline, and provides accurate autocomplete in your editor.
-:::
+```toml
+[changelog]
+header = """
+# Changelog
+"""
+body = """
+{% for group, commits in commits | group_by(attribute="group") %}
+    ### {{ group | upper_first }}
+    {% for commit in commits %}
+        - {% if commit.scope %}*({{ commit.scope }})* {% endif %}{{ commit.message }}
+    {% endfor %}
+{% endfor %}
+"""
 
-```json
-{
-  "$schema": "../node_modules/@changesets/config/schema.json",
-  "changelog": "@changesets/cli/changelog",
-  "commit": false,
-  "fixed": [],
-  "linked": [],
-  "access": "public",
-  "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": []
-}
+[git]
+conventional_commits = true
+commit_parsers = [
+    { message = "^feat", group = "🚀 Features" },
+    { message = "^fix", group = "🐛 Bug Fixes" },
+    # ... more parsers
+]
 ```
-
-Key settings:
-
-- `changelog` - Changelog generator (uses content from changeset files)
-- `access: "public"` - Publish as public package
-- `baseBranch: "main"` - PR target branch
 
 ## npm Setup
 
@@ -188,7 +132,7 @@ Key settings:
 For `@scope/package-name`:
 
 1. Create or join an npm organization
-2. Ensure `access: "public"` in changeset config
+2. The workflow uses `--access public` by default
 
 ## Manual Publishing
 
@@ -204,29 +148,19 @@ npm publish --access public
 
 ## Troubleshooting
 
-### Release PR Not Created
+### Release Workflow Failed
 
-- Ensure `.changeset/*.md` files exist (not just README.md)
-- Check GitHub Actions logs
-- Verify workflow has PR creation permissions
+- Verify `GH_PAT` has `repo` scope
+- Verify `NPM_TOKEN` is valid
+- Check if branch protection allows the PAT
 
-### Publish Failed
+### Changelog Not Generated
+
+- Ensure commits follow conventional format
+- Check `cliff.toml` configuration
+
+### npm Publish Failed
 
 - Verify `NPM_TOKEN` is set correctly
 - Check npm account permissions
 - Ensure package name is available
-
-### Markdownlint Errors
-
-Fix formatting issues in changeset files:
-
-```bash
-# Check manually
-bunx markdownlint-cli2 ".changeset/*.md"
-```
-
-Common fixes:
-
-- Add blank line after headings
-- Remove trailing spaces
-- Use consistent list markers

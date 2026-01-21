@@ -32,7 +32,7 @@ export default defineConfig({
         text: "Configuration",
         items: [
           { text: "TypeScript", link: "/configuration/typescript" },
-          { text: "Biome", link: "/configuration/biome" },
+          { text: "Prettier", link: "/configuration/prettier" },
           { text: "ESLint", link: "/configuration/eslint" },
           { text: "Vitest", link: "/configuration/vitest" },
           { text: "Lefthook", link: "/configuration/lefthook" },

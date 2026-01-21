@@ -25,7 +25,7 @@ features:
     details: Vitest configured with coverage reports. Write tests from day one.
   - icon: 🔧
     title: Automated Quality
-    details: Biome for linting/formatting, ESLint for JSDoc and code quality, Lefthook for git hooks.
+    details: Prettier for formatting, ESLint for linting and import sorting, Lefthook for git hooks.
   - icon: 🚀
     title: Publish with Confidence
     details: Changesets for versioning. GitHub Actions for automated releases.
