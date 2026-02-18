@@ -84,7 +84,7 @@
     "jiti": "^2.6.1",
     "knip": "^5.82.1",
     "lefthook": "^2.0.15",
-    "markdownlint-cli2": "^0.20.0",
+    "markdownlint-cli2": "^0.21.0",
     "prettier": "^3.8.0",
     "tsdown": "^0.20.0-beta.4",
     "typescript": "^5.9.3",
